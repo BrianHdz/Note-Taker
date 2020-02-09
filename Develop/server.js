@@ -1,25 +1,25 @@
-const fs = require("fs");
-const db = require("./db/db.json");
-const uuidv4 = require('uuid/v4');
-
 // const axios = require("axios");
 // // const $ = require("jquery");
 // var jsdom = require('jsdom');
 // $ = require('jquery')(new jsdom.JSDOM().window);
 
 
-
-
 // Dependencies
 // =============================================================
-var express = require("express");
-var path = require("path");
-var http = require("http");
 
-// Sets up the Express App
+const fs = require("fs");
+const path = require("path");
+const http = require("http");
+const uuidv4 = require('uuid/v4');
+const express = require("express");
+const db = require("./db/db.json");
+
+
+
+// Sets up the Express App & Server
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 3333;
+var PORT = process.env.PORT || 7777 ;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -32,6 +32,8 @@ app.listen(PORT, function () {
     console.log("Server listening on: http://localhost:" + PORT);
 });
 
+
+
 // Routes
 // =============================================================
 
@@ -39,16 +41,20 @@ app.listen(PORT, function () {
 app.get("/index", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 });
-// Link to get into notes.html from main button
+// Send user to notes.html from index.html "Get Started" button
 app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
-
+// I think this pulls the db.json info and puts it into the sidebar?????
+// Not super sure but we definitely need this.
 app.get("/api/notes", function (req, res) {
     res.json(db);
 });
 
-// Displays all notes in sidebar
+
+
+// Saves notes in sidebar, gives them a uniqueID & 
+// calls them onto page when clicked in sidebar.  
 app.post("/api/notes", function (req, res) {
 
     // This gives the new note a unique ID
@@ -58,69 +64,31 @@ app.post("/api/notes", function (req, res) {
     // This pushes the new note to the sidebar
     db.push(req.body);
     res.json(true);
-    // console.log(req.body);
 
-    // The next few steps will push the new note into the db.json file
-    // This will read the db.json file and turn it into var database.
+    // Next few steps push the new note into db.json file :)
+    // Read db.json file. Turn it into var "database".
     let database = fs.readFileSync("./db/db.json", "utf-8");
 
-    //this turns the JSON string into a JS array
+    // Turn JSON "database" string into an array
     let array = JSON.parse(database);
     let note = (req.body);
-    //console.log(array);
-    //console.log(note);
 
-    // appending "note" object to the JS "array"
+    // Append "note" object to JS "array"
     array.push(note);
-    //console.log(array);
 
     // Stringify "array" so we can write/send it back to db.json
     array = JSON.stringify(array);
-    console.log(array);
 
-    // write'ing back to db.json
+    // Write'ing back to db.json
     fs.writeFileSync("./db/db.json",array,"utf-8");
 
 });
 
 
 
+// Next few steps DELETE from sidebar notes
 
-// fs.appendFile("./db/db.json", req.body, function (err) {
 
-//     if (err) {
-//         return console.log(err);
-//     }
 
-//     console.log("Success!");
 
-// });
-// ----------------------------------------------------
-//this turns the JSON string into a JS array
-// let array = JSON.parse(database);
-// let note = (req.body);
-// console.log(array);
-// console.log(note);
 
-// // appending my object to the JS newArray
-// // let newArray = 
-// array.push(note);
-// console.log(array);
-
-//--------------------------------------------------------
-// This will read the db.json file and turn it into var database.
-// let database = fs.readFileSync("./db/db.json", "utf-8");
-// console.log(database);
-
-// //Then we take the new note and turn that into variable "note"
-// let note = (req.body);
-// console.log(note);
-
-// // Push "note" into "database"
-// database.push();
-// console.log(newData);
-
-// // Turn the JSON string into a JS array
-// let array = JSON.parse(newData);
-
-// console.log(array);
