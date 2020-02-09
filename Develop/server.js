@@ -13,10 +13,14 @@ const http = require("http");
 const uuidv4 = require('uuid/v4');
 const express = require("express");
 const db = require("./db/db.json");
+// Tried using this require to pull a variable from the index.js file... didn't work.
+//const index = require("./public/assets/js/index.js");
 
 
 
-// Sets up the Express App & Server
+
+
+// Set up Express App & Server
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 7777 ;
@@ -34,7 +38,9 @@ app.listen(PORT, function () {
 
 
 
-// Routes
+
+
+// Routes ******************
 // =============================================================
 
 // Basic route that sends the user first to the AJAX Page index.html
@@ -86,9 +92,48 @@ app.post("/api/notes", function (req, res) {
 
 
 
+
+
 // Next few steps DELETE from sidebar notes
+app.delete("/api/notes/:id", function(req, res) {
+
+    // Create and onClick event and pull the ID from the clicked item.            <<<<<<<----------------Continue from here in the morning.
+
+    // Read db.json file. Turn it into var "database".
+    let database = fs.readFileSync("./db/db.json", "utf-8");
+
+    // Turn JSON "database" string into an array
+    let array = JSON.parse(database);
+
+    // Empty out the arrays of data
+    res.json('DELETE request to homepage');
+    console.log("/api/notes/:id");
+    console.log(activeNote)
+  });
 
 
 
 
 
+
+
+  // ----------------------------------------------------------
+  // Testing the code below
+  
+  
+  /*
+  
+
+
+  // Next few steps DELETE from sidebar notes
+app.delete("/api/notes/:id", function(req, res) {
+    // Empty out the arrays of data
+    tableData.length = 0;
+    waitListData.length = 0;
+
+    res.json({ ok: true });
+  });
+  
+
+
+  */

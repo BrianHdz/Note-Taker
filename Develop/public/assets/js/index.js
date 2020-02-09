@@ -68,7 +68,7 @@ var handleNoteSave = function () {
   });
 };
 
-// Delete the clicked note
+// Delete the clicked note after clicking ".delete-note" icon.
 var handleNoteDelete = function (event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
@@ -76,7 +76,10 @@ var handleNoteDelete = function (event) {
   var note = $(this)
     .parent(".list-group-item")
     .data();
+    console.log(note);
+    console.log(activeNote.id);
 
+    //have to click note first... then click DELETE button to clear.
   if (activeNote.id === note.id) {
     activeNote = {};
   }
@@ -149,3 +152,4 @@ $noteText.on("keyup", handleRenderSaveBtn);
 
 // Gets and renders the initial list of notes
 getAndRenderNotes();
+module.exports = handleNoteDelete();
