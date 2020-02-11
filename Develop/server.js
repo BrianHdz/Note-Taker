@@ -1,5 +1,5 @@
 // const axios = require("axios");
-// // const $ = require("jquery");
+// const $ = require("jquery");
 // var jsdom = require('jsdom');
 // $ = require('jquery')(new jsdom.JSDOM().window);
 
@@ -13,8 +13,9 @@ const http = require("http");
 const uuidv4 = require('uuid/v4');
 const express = require("express");
 const db = require("./db/db.json");
+
 // Tried using this require to pull a variable from the index.js file... didn't work.
-//const index = require("./public/assets/js/index.js");
+// const index = require("./public/assets/js/index.js");
 
 
 
@@ -104,11 +105,13 @@ app.delete("/api/notes/:id", function(req, res) {
 
     // Turn JSON "database" string into an array
     let array = JSON.parse(database);
-
+    //console.log(note.id);
+    console.log(array[2].id);
+    // console.log(index.activeNote);
     // Empty out the arrays of data
     res.json('DELETE request to homepage');
-    console.log("/api/notes/:id");
-    console.log(activeNote)
+    // console.log(/api/notes/id);
+    
   });
 
 
