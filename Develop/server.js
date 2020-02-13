@@ -99,18 +99,32 @@ app.post("/api/notes", function (req, res) {
 app.delete("/api/notes/:id", function(req, res) {
 
     // Create and onClick event and pull the ID from the clicked item.            <<<<<<<----------------Continue from here in the morning.
-
+    let idToDelete = req.params.id;
+    
+    
     // Read db.json file. Turn it into var "database".
     let database = fs.readFileSync("./db/db.json", "utf-8");
+    console.log(database);
 
-    // Turn JSON "database" string into an array
+    // Turn JSON "database" string into an object with the variable name of array which is misleading.
     let array = JSON.parse(database);
-    //console.log(note.id);
-    console.log(array[2].id);
-    // console.log(index.activeNote);
-    // Empty out the arrays of data
-    res.json('DELETE request to homepage');
-    // console.log(/api/notes/id);
+    
+    
+    for (var i = 0; i < array.length; i++) {
+if (array[i].id === idToDelete) {
+    console.log("Found item to delete")
+    array.splice(i,1)
+}
+    }
+    console.log(idToDelete);
+    console.log(database);
+    
+   // Stringify "array" so we can write/send it back to db.json
+   array = JSON.stringify(array);
+
+   // Write'ing back to db.json
+   fs.writeFileSync("./db/db.json",array,"utf-8");
+
     
   });
 
